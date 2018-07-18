@@ -28,7 +28,7 @@
 <script>
 
 var margin = {top: 50, right: 120, bottom: 20, left: 120},
-    width = 3000 - margin.right - margin.left,
+    width = 2000 - margin.right - margin.left,
     height = 1000 - margin.top - margin.bottom;
 
 var i = 0,
@@ -39,15 +39,14 @@ var tree = d3.layout.tree()
     .size([height, width]);
 
 var diagonal = d3.svg.diagonal()
-    .projection(function(d) { return [d.x, d.y]; });
+    .projection(function(d) { return [d.y, d.x]; });
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
-
+  
 var data = {
   "fname": "Daniel",
   "lname": "Julien",
@@ -138,7 +137,7 @@ function update(source) {
   // Enter any new nodes at the parent's previous position.
   var nodeEnter = node.enter().append("g")
       .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + source.x0 + "," + source.y0 + ")"; })
+      .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
       .on("click", click);
 
   // add picture
@@ -184,7 +183,7 @@ function update(source) {
   // Transition nodes to their new position.
   var nodeUpdate = node.transition()
       .duration(duration)
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+      .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
 
   nodeUpdate.select("circle")
       .attr("r", 30)
@@ -198,7 +197,7 @@ function update(source) {
   // Transition exiting nodes to the parent's new position.
   var nodeExit = node.exit().transition()
       .duration(duration)
-      .attr("transform", function(d) { return "translate(" + source.x + "," + source.y + ")"; })
+      .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
       .remove();
 
   nodeExit.select("circle")
